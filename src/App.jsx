@@ -1,16 +1,27 @@
+import { useState } from "react";
+
 import AddForm from "./components/AddForm";
 import SearchForm from "./components/SearchForm";
-import Task from "./components/Task";
+import TaskList from "./components/TaskList";
 
 import "./App.scss";
 
 function App() {
+  const [tasks, setTasks] = useState([]);
+
+  function addTask(title) {
+    setTasks(currentTasks => {
+      return [...currentTasks, { id: crypto.randomUUID(), title, completed: false }];
+    });
+  }
+
   return (
     <div className="app">
       <h1 className="app__title">To-do List</h1>
-      <AddForm />
+      <AddForm onSubmit={addTask} />
       <SearchForm />
-      <Task />
+      <h2>tasks:</h2>
+      <TaskList tasks={tasks} />
     </div>
   );
 }

@@ -1,20 +1,23 @@
 import { useState } from "react";
 
-export default function AddForm() {
+export default function AddForm({ onSubmit }) {
   const [value, setValue] = useState("");
 
-  const changeValue = e => {
-    setValue(e.target.value);
-    console.log(value);
-  };
+  function handleSubmit(e) {
+    e.preventDefault();
+    onSubmit(value);
+  }
 
   return (
-    <form className="add-form">
+    <form
+      onSubmit={handleSubmit}
+      className="add-form"
+    >
       <input
         value={value}
         type="text"
         className="add-form__input"
-        onChange={e => changeValue(e)}
+        onChange={e => setValue(e.target.value)}
       />
       <button className="add-form__btn">Add Task</button>
     </form>
