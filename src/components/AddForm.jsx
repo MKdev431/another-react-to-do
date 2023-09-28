@@ -6,6 +6,7 @@ export default function AddForm({ onSubmit }) {
   function handleSubmit(e) {
     e.preventDefault();
     onSubmit(value);
+    setValue("");
   }
 
   return (

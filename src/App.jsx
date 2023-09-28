@@ -10,8 +10,25 @@ function App() {
   const [tasks, setTasks] = useState([]);
 
   function addTask(title) {
+    setTasks(currentTasks => [...currentTasks, { id: crypto.randomUUID(), title, completed: false }]);
+  }
+
+  function taskChecked(id, completed) {
     setTasks(currentTasks => {
-      return [...currentTasks, { id: crypto.randomUUID(), title, completed: false }];
+      return currentTasks.map(task => {
+        if (task.id === id) return { ...task, completed };
+        return task;
+      });
+    });
+  }
+
+  function deleteTask(id) {
+    setTasks(currentTasks => {
+      return currentTasks.filter(task => {
+        if (task.id !== id) {
+          return task;
+        }
+      });
     });
   }
 
@@ -21,7 +38,11 @@ function App() {
       <AddForm onSubmit={addTask} />
       <SearchForm />
       <h2>tasks:</h2>
-      <TaskList tasks={tasks} />
+      <TaskList
+        tasks={tasks}
+        taskChecked={taskChecked}
+        deleteTask={deleteTask}
+      />
     </div>
   );
 }
